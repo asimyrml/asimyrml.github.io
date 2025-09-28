@@ -854,44 +854,75 @@
       },
     ], 4200);
 
-    // --- Carousel dil desteği ---
-function updateCarouselLanguage(lang) {
-  const heroImages = [
-    {
-      tr: { title: 'All Return Records Dashboard', subtitle: 'İade/ERP ekranı' },
-      en: { title: 'All Return Records Dashboard', subtitle: 'Returns/ERP screen' }
-    },
-    {
-      tr: { title: 'TaskLab – Modern Task Management', subtitle: 'Görev yönetim sistemi' },
-      en: { title: 'TaskLab – Modern Task Management', subtitle: 'Task management system' }
-    },
-    {
-      tr: { title: 'Real Estate Price Prediction', subtitle: 'Kira tahmin projesi (ML & Ethics)' },
-      en: { title: 'Real Estate Price Prediction', subtitle: 'Rent prediction project (ML & Ethics)' }
-    },
-    {
-      tr: { title: 'Repair Simulation Platform', subtitle: 'Cihaz onarım simülasyonu' },
-      en: { title: 'Repair Simulation Platform', subtitle: 'Device repair simulation' }
-    },
-    {
-      tr: { title: 'Financial & Purchase Analysis Dashboard', subtitle: 'Satın alma / finans ekranı' },
-      en: { title: 'Financial & Purchase Analysis Dashboard', subtitle: 'Purchase / finance dashboard' }
-    }
-  ];
-  const langKey = lang === 'en' ? 'en' : 'tr';
-  document.querySelectorAll('#heroCarousel .carousel-title').forEach((el, i) => {
-    el.textContent = heroImages[i][langKey].title;
-  });
-  document.querySelectorAll('#heroCarousel .carousel-subtitle').forEach((el, i) => {
-    el.textContent = heroImages[i][langKey].subtitle;
-  });
+    // Projects data —> EDIT HERE
+const PROJECTS = [
+  {
+    title:'Tarz Kutu Stok Yönetimi',
+    enTitle:'Tarz Kutu Stock Management',
+    period:'2023 – Devam',
+    enPeriod:'2023 – Present',
+    tags:['Django','DRF','PostgreSQL','Docker'],
+    img:'assets/proj-tarzkutu.png',
+    desc:'Çok depolu, gerçek zamanlı envanter & sipariş yönetimi; ERP/E‑Fatura entegrasyonları.',
+    enDesc:'Multi-warehouse, real-time inventory & order management; ERP/e-invoice integrations.',
+    links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+  },
+  {
+    title:'Zebra Yazıcı Mikro‑Servisi',
+    enTitle:'Zebra Printer Microservice',
+    period:'2025',
+    enPeriod:'2025',
+    tags:['Python','Django Signals','ZPL','Docker'],
+    img:'assets/hero-4.png',
+    desc:'Ağdaki Zebra yazıcılara otomatik ZPL yazdırma, sıra yönetimi ve durum izleme.',
+    enDesc:'Automatic ZPL printing to network Zebra printers, queue management and status monitoring.',
+    links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+  },
+  {
+    title:'İstanbul Kira Tahmini',
+    enTitle:'Istanbul Rent Prediction',
+    period:'2025',
+    enPeriod:'2025',
+    tags:['Pandas','Scikit‑learn','XGBoost','API'],
+    img:'assets/hero-3.png',
+    desc:'Coğrafi özellik mühendisliği ile tahmin; API üzerinden anlık analiz.',
+    enDesc:'Prediction with geographic feature engineering; instant analysis via API.',
+    links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+  },
+  // --- Yeni projeleri bu formatta ekleyin ---
+];
+
+// Grid render (dil desteği ile)
+function renderProjects(lang) {
+  const grid = document.getElementById('projectGrid');
+  grid.innerHTML = PROJECTS.map(p=>`
+    <article class="glass card overflow-hidden">
+      <img src="${p.img}" alt="${lang === 'en' ? p.enTitle : p.title}" class="w-full h-40 object-contain object-center rounded-t-xl bg-slate-800/20">
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h3 class="font-semibold text-lg" data-tr="${p.title}" data-en="${p.enTitle}">${lang === 'en' ? p.enTitle : p.title}</h3>
+            <p class="text-xs text-slate-400" data-tr="${p.period}" data-en="${p.enPeriod}">${lang === 'en' ? p.enPeriod : p.period}</p>
+          </div>
+          <div class="flex gap-1 flex-wrap">${p.tags.map(t=>`<span class='tag px-2 py-0.5 rounded-full text-xs'>${t}</span>`).join('')}</div>
+        </div>
+        <p class="mt-3 text-sm text-slate-200/90 leading-relaxed" data-tr="${p.desc}" data-en="${p.enDesc}">${lang === 'en' ? p.enDesc : p.desc}</p>
+        <div class="mt-4 flex gap-2 flex-wrap">
+          ${p.links.map(l=>`<a class='px-3 py-2 rounded-lg glass text-sm' target='_blank' rel='noreferrer' href='${l.href}'>${l.label}</a>`).join('')}
+        </div>
+      </div>
+    </article>`).join('');
 }
+
+// İlk yüklemede projeleri göster
+renderProjects(currentLang);
 
 // --- Carousel dil fonksiyonunu dil değişiminde tetikle ---
 const originalChangeLanguage = changeLanguage;
 changeLanguage = function(lang) {
   originalChangeLanguage(lang);
   updateCarouselLanguage(lang);
+  renderProjects(lang);
 };
   </script>
 </body>
