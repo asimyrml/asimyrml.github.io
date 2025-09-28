@@ -1,9 +1,8 @@
 # 🌐 Asım Yirmili • Portfolio  
 
 Bu repo, kişisel portföy sayfamı içerir.  
-👉 **Canlı demo**: [asimyrml.github.io](https://asimyrml.github.io/)  
+👉 **Canlı demo**: [asimyrml.github.io](https://asimyrml.github.io/) 
 
-![Portfolio Preview](assets/cover.jpg)  
 
 ---
 
