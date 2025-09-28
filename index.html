@@ -16,32 +16,46 @@
   <!-- Tailwind via CDN for GitHub Pages (no build step needed) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --bg:#0a0e1a; /* deeper dark blue */
-      --fg:#e7eefc; /* near-white */
-      --muted:#9db1d7;
-      --accent:#7c9cff; /* indigo-ish */
-      --accent-2:#ff6b9d; /* pink accent */
-      --accent-3:#4ecdc4; /* teal accent */
-      --glass:rgba(255,255,255,.08);
+    :root {
+      --bg: #0a0e1a; /* deeper dark blue */
+      --fg: #e7eefc; /* near-white */
+      --muted: #9db1d7;
+      --accent: #7c9cff; /* indigo-ish */
+      --accent-2: #ff6b9d; /* pink accent */
+      --accent-3: #4ecdc4; /* teal accent */
+      --glass: rgba(255, 255, 255, 0.08);
     }
-    html,body{height:100%; min-height:100vh;}
-    body{
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       background: 
-        radial-gradient(ellipse 1200px 800px at 20% 10%, rgba(124,156,255,0.3), transparent 50%),
-        radial-gradient(ellipse 1000px 600px at 80% 20%, rgba(255,107,157,0.2), transparent 50%),
-        radial-gradient(ellipse 800px 500px at 50% 80%, rgba(78,205,196,0.15), transparent 50%),
+        radial-gradient(circle at 20% 20%, rgba(124, 156, 255, 0.3), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(255, 107, 157, 0.2), transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(78, 205, 196, 0.15), transparent 60%),
         linear-gradient(135deg, #0a0e1a 0%, #1a1f3a 25%, #0f1419 50%, #1a1f3a 75%, #0a0e1a 100%);
       background-color: #0a0e1a;
-      /* background-attachment: fixed;  Mobilde kaldırıldı */
-      color:var(--fg);
+      color: var(--fg);
       position: relative;
       overflow-x: hidden;
       min-height: 100vh;
+      padding-top: 4rem; /* Prevent overlap with navbar */
+      background-attachment: fixed; /* Ensure background stays fixed */
+      background-size: cover; /* Cover the entire viewport */
     }
-    
-    /* Seamless animated background particles */
+
+    /* Enhanced floating particles */
     body::before {
       content: '';
       position: fixed;
@@ -50,41 +64,41 @@
       width: 100%;
       height: 100vh;
       background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(124,156,255,0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,107,157,0.2), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(78,205,196,0.3), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(124,156,255,0.2), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255,107,157,0.1), transparent);
+        radial-gradient(3px 3px at 20px 30px, rgba(124, 156, 255, 0.3), transparent),
+        radial-gradient(3px 3px at 40px 70px, rgba(255, 107, 157, 0.2), transparent),
+        radial-gradient(2px 2px at 90px 40px, rgba(78, 205, 196, 0.3), transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(124, 156, 255, 0.2), transparent),
+        radial-gradient(3px 3px at 160px 30px, rgba(255, 107, 157, 0.1), transparent);
       background-repeat: repeat;
-      background-size: 200px 200px;
-      animation: seamlessFloat 30s linear infinite;
+      background-size: 250px 250px;
+      animation: floatParticles 25s linear infinite;
       pointer-events: none;
       z-index: -1;
     }
-    
-    @keyframes seamlessFloat {
-      0% { 
+
+    @keyframes floatParticles {
+      0% {
         transform: translateY(0px) translateX(0px);
         opacity: 0.3;
       }
-      25% { 
-        transform: translateY(-50px) translateX(10px);
+      25% {
+        transform: translateY(-40px) translateX(15px);
         opacity: 0.6;
       }
-      50% { 
-        transform: translateY(-100px) translateX(-5px);
+      50% {
+        transform: translateY(-80px) translateX(-10px);
         opacity: 0.4;
       }
-      75% { 
-        transform: translateY(-150px) translateX(15px);
+      75% {
+        transform: translateY(-120px) translateX(20px);
         opacity: 0.7;
       }
-      100% { 
-        transform: translateY(-200px) translateX(0px);
+      100% {
+        transform: translateY(-160px) translateX(0px);
         opacity: 0.3;
       }
     }
-    
+
     .glass{
       background:rgba(255,255,255,.08);
       backdrop-filter:blur(15px);
@@ -280,6 +294,26 @@
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(1.1); }
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 40;
+    }
+
+    body {
+      padding-top: 4rem; /* Adjust padding to prevent content overlap with fixed navbar */
+    }
+
+    footer {
+      margin-top: auto; /* Push footer to the bottom */
+    }
   </style>
 </head>
 <body>
@@ -289,7 +323,8 @@
   <div class="glow -z-10 top-1/2 left-1/2 w-[300px] h-[300px] rounded-full" style="background:radial-gradient(closest-side,rgba(78,205,196,.3),transparent)"></div>
 
   <!-- Nav -->
-  <header class="sticky top-0 z-40">
+  <header class="fixed top-0 left-0 w-full z-50">
+
     <nav class="glass card max-w-6xl mx-auto mt-4 px-4 md:px-6 py-3 flex items-center justify-between">
       <a href="#home" class="font-semibold text-lg tracking-tight">AY</a>
       <div class="hidden md:flex gap-6 text-sm text-slate-300">
@@ -777,72 +812,87 @@
 
     // Hero carousel (static images)
     makeCarousel('heroCarousel', [
-      {src:'assets/hero-1.png', alt:'All Return Records Dashboard', title:'All Return Records Dashboard', subtitle:'İade/ERP ekranı'},
-      {src:'assets/hero-2.png', alt:'TaskLab – Modern Task Management', title:'TaskLab – Modern Task Management', subtitle:'Görev yönetim sistemi'},
-      {src:'assets/hero-3.png', alt:'Real Estate Price Prediction', title:'Real Estate Price Prediction', subtitle:'Kira tahmin projesi (ML & Ethics)'},
-      {src:'assets/hero-4.png', alt:'Repair Simulation Platform', title:'Repair Simulation Platform', subtitle:'Cihaz onarım simülasyonu'},
-      {src:'assets/hero-5.png', alt:'Financial & Purchase Analysis Dashboard', title:'Financial & Purchase Analysis Dashboard', subtitle:'Satın alma / finans ekranı'},
+      {
+        src: 'assets/hero-1.png',
+        alt: 'All Return Records Dashboard',
+        title: 'All Return Records Dashboard',
+        subtitle: 'İade/ERP ekranı',
+        enTitle: 'All Return Records Dashboard',
+        enSubtitle: 'Returns/ERP screen'
+      },
+      {
+        src: 'assets/hero-2.png',
+        alt: 'TaskLab – Modern Task Management',
+        title: 'TaskLab – Modern Task Management',
+        subtitle: 'Görev yönetim sistemi',
+        enTitle: 'TaskLab – Modern Task Management',
+        enSubtitle: 'Task management system'
+      },
+      {
+        src: 'assets/hero-3.png',
+        alt: 'Real Estate Price Prediction',
+        title: 'Real Estate Price Prediction',
+        subtitle: 'Kira tahmin projesi (ML & Ethics)',
+        enTitle: 'Real Estate Price Prediction',
+        enSubtitle: 'Rent prediction project (ML & Ethics)'
+      },
+      {
+        src: 'assets/hero-4.png',
+        alt: 'Repair Simulation Platform',
+        title: 'Repair Simulation Platform',
+        subtitle: 'Cihaz onarım simülasyonu',
+        enTitle: 'Repair Simulation Platform',
+        enSubtitle: 'Device repair simulation'
+      },
+      {
+        src: 'assets/hero-5.png',
+        alt: 'Financial & Purchase Analysis Dashboard',
+        title: 'Financial & Purchase Analysis Dashboard',
+        subtitle: 'Satın alma / finans ekranı',
+        enTitle: 'Financial & Purchase Analysis Dashboard',
+        enSubtitle: 'Purchase / finance dashboard'
+      },
     ], 4200);
 
-    // Projects data —> EDIT HERE
-    const PROJECTS = [
-      {
-        title:'Tarz Kutu Stok Yönetimi',
-        enTitle:'Tarz Kutu Stock Management',
-        period:'2023 – Devam',
-        enPeriod:'2023 – Present',
-        tags:['Django','DRF','PostgreSQL','Docker'],
-        img:'assets/proj-tarzkutu.png',
-        desc:'Çok depolu, gerçek zamanlı envanter & sipariş yönetimi; ERP/E‑Fatura entegrasyonları.',
-        enDesc:'Multi-warehouse, real-time inventory & order management; ERP/e-invoice integrations.',
-        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
-      },
-      {
-        title:'Zebra Yazıcı Mikro‑Servisi',
-        enTitle:'Zebra Printer Microservice',
-        period:'2025',
-        enPeriod:'2025',
-        tags:['Python','Django Signals','ZPL','Docker'],
-        img:'assets/hero-4.png',
-        desc:'Ağdaki Zebra yazıcılara otomatik ZPL yazdırma, sıra yönetimi ve durum izleme.',
-        enDesc:'Automatic ZPL printing to network Zebra printers, queue management and status monitoring.',
-        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
-      },
-      {
-        title:'İstanbul Kira Tahmini',
-        enTitle:'Istanbul Rent Prediction',
-        period:'2025',
-        enPeriod:'2025',
-        tags:['Pandas','Scikit‑learn','XGBoost','API'],
-        img:'assets/hero-3.png',
-        desc:'Coğrafi özellik mühendisliği ile tahmin; API üzerinden anlık analiz.',
-        enDesc:'Prediction with geographic feature engineering; instant analysis via API.',
-        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
-      },
-      // --- Yeni projeleri bu formatta ekleyin ---
-    ];
+    // --- Carousel dil desteği ---
+function updateCarouselLanguage(lang) {
+  const heroImages = [
+    {
+      tr: { title: 'All Return Records Dashboard', subtitle: 'İade/ERP ekranı' },
+      en: { title: 'All Return Records Dashboard', subtitle: 'Returns/ERP screen' }
+    },
+    {
+      tr: { title: 'TaskLab – Modern Task Management', subtitle: 'Görev yönetim sistemi' },
+      en: { title: 'TaskLab – Modern Task Management', subtitle: 'Task management system' }
+    },
+    {
+      tr: { title: 'Real Estate Price Prediction', subtitle: 'Kira tahmin projesi (ML & Ethics)' },
+      en: { title: 'Real Estate Price Prediction', subtitle: 'Rent prediction project (ML & Ethics)' }
+    },
+    {
+      tr: { title: 'Repair Simulation Platform', subtitle: 'Cihaz onarım simülasyonu' },
+      en: { title: 'Repair Simulation Platform', subtitle: 'Device repair simulation' }
+    },
+    {
+      tr: { title: 'Financial & Purchase Analysis Dashboard', subtitle: 'Satın alma / finans ekranı' },
+      en: { title: 'Financial & Purchase Analysis Dashboard', subtitle: 'Purchase / finance dashboard' }
+    }
+  ];
+  const langKey = lang === 'en' ? 'en' : 'tr';
+  document.querySelectorAll('#heroCarousel .carousel-title').forEach((el, i) => {
+    el.textContent = heroImages[i][langKey].title;
+  });
+  document.querySelectorAll('#heroCarousel .carousel-subtitle').forEach((el, i) => {
+    el.textContent = heroImages[i][langKey].subtitle;
+  });
+}
 
-    // Projects carousel (single visible)
-    makeCarousel('projCarousel', PROJECTS.map(p=>({src:p.img, alt:p.title})), 3800);
-
-    // Grid render
-    const grid = document.getElementById('projectGrid');
-    grid.innerHTML = PROJECTS.map(p=>`\n      <article class="glass card overflow-hidden">
-        <img src="${p.img}" alt="${p.title}" class="w-full h-40 object-contain object-center rounded-t-xl bg-slate-800/20">
-        <div class="p-5">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h3 class="font-semibold text-lg" data-tr="${p.title}" data-en="${p.enTitle}">${p.title}</h3>
-              <p class="text-xs text-slate-400" data-tr="${p.period}" data-en="${p.enPeriod}">${p.period}</p>
-            </div>
-            <div class="flex gap-1 flex-wrap">${p.tags.map(t=>`<span class='tag px-2 py-0.5 rounded-full text-xs'>${t}</span>`).join('')}</div>
-          </div>
-          <p class="mt-3 text-sm text-slate-200/90 leading-relaxed" data-tr="${p.desc}" data-en="${p.enDesc}">${p.desc}</p>
-          <div class="mt-4 flex gap-2 flex-wrap">
-            ${p.links.map(l=>`<a class='px-3 py-2 rounded-lg glass text-sm' target='_blank' rel='noreferrer' href='${l.href}'>${l.label}</a>`).join('')}
-          </div>
-        </div>
-      </article>`).join('');
+// --- Carousel dil fonksiyonunu dil değişiminde tetikle ---
+const originalChangeLanguage = changeLanguage;
+changeLanguage = function(lang) {
+  originalChangeLanguage(lang);
+  updateCarouselLanguage(lang);
+};
   </script>
 </body>
 </html>
