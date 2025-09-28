@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="pageTitle">Asım Yirmili • Portfolio</title>
+  <meta name="description" id="pageDescription" content="Asım Yirmili – Python/Django & Full‑Stack Developer Portfolio" />
+  <meta property="og:title" id="ogTitle" content="Asım Yirmili • Portfolio" />
+  <meta property="og:description" id="ogDescription" content="Python/Django, ERP/WMS, API Entegrasyonları, MLOps" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/cover.jpg" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Tailwind via CDN for GitHub Pages (no build step needed) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#0a0e1a; /* deeper dark blue */
+      --fg:#e7eefc; /* near-white */
+      --muted:#9db1d7;
+      --accent:#7c9cff; /* indigo-ish */
+      --accent-2:#ff6b9d; /* pink accent */
+      --accent-3:#4ecdc4; /* teal accent */
+      --glass:rgba(255,255,255,.08);
+    }
+    html,body{height:100%; min-height:100vh;}
+    body{
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background: 
+        radial-gradient(ellipse 1200px 800px at 20% 10%, rgba(124,156,255,0.3), transparent 50%),
+        radial-gradient(ellipse 1000px 600px at 80% 20%, rgba(255,107,157,0.2), transparent 50%),
+        radial-gradient(ellipse 800px 500px at 50% 80%, rgba(78,205,196,0.15), transparent 50%),
+        linear-gradient(135deg, #0a0e1a 0%, #1a1f3a 25%, #0f1419 50%, #1a1f3a 75%, #0a0e1a 100%);
+      background-color: #0a0e1a;
+      /* background-attachment: fixed;  Mobilde kaldırıldı */
+      color:var(--fg);
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* Seamless animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(124,156,255,0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,107,157,0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(78,205,196,0.3), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(124,156,255,0.2), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255,107,157,0.1), transparent);
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      animation: seamlessFloat 30s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    @keyframes seamlessFloat {
+      0% { 
+        transform: translateY(0px) translateX(0px);
+        opacity: 0.3;
+      }
+      25% { 
+        transform: translateY(-50px) translateX(10px);
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translateY(-100px) translateX(-5px);
+        opacity: 0.4;
+      }
+      75% { 
+        transform: translateY(-150px) translateX(15px);
+        opacity: 0.7;
+      }
+      100% { 
+        transform: translateY(-200px) translateX(0px);
+        opacity: 0.3;
+      }
+    }
+    
+    .glass{
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(15px);
+      -webkit-backdrop-filter:blur(15px);
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .card{
+      border-radius:1.25rem;
+      box-shadow:0 20px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.05);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1);
+    }
+    .tag{
+      background:rgba(124,156,255,.15);
+      border:1px solid rgba(124,156,255,.3);
+      backdrop-filter: blur(10px);
+    } 
+    .btn-primary{
+      background:linear-gradient(135deg,#7c9cff,#5f7bff);
+      box-shadow: 0 4px 15px rgba(124,156,255,0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(124,156,255,0.4);
+    }
+
+    /* --- Carousel --- */
+    .carousel{position:relative;overflow:hidden;border-radius:1.25rem;}
+    .carousel-track{display:flex;transition:transform .6s cubic-bezier(.22,.61,.36,1);will-change:transform;}
+    .carousel-slide{min-width:100%;user-select:none;position:relative;}
+    .carousel-slide img{
+      display:block;
+      width:100%;
+      height:280px;
+      object-fit:contain;
+      object-position:center;
+      border-radius:0.75rem;
+      background:rgba(255,255,255,0.05);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: optimize-contrast;
+      -ms-interpolation-mode: bicubic;
+    }
+    
+    /* Carousel Overlay */
+    .carousel-overlay{
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+      background:linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding:2rem 1.5rem 1.5rem;
+      border-radius:0 0 0.75rem 0.75rem;
+    }
+    .carousel-title{
+      font-size:1.25rem;
+      font-weight:600;
+      color:#fff;
+      margin:0 0 0.5rem 0;
+      text-shadow:0 2px 4px rgba(0,0,0,0.5);
+    }
+    .carousel-subtitle{
+      font-size:0.875rem;
+      color:rgba(255,255,255,0.9);
+      margin:0;
+      text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    /* Responsive carousel heights */
+    @media (max-width: 768px) {
+      .carousel-slide img{height:240px;}
+      .carousel-overlay{padding:1.5rem 1rem 1rem;}
+      .carousel-title{font-size:1.125rem;}
+      .carousel-subtitle{font-size:0.8rem;}
+    }
+    @media (max-width: 480px) {
+      html, body {
+        background: linear-gradient(135deg, #0a0e1a 0%, #1a1f3a 25%, #0f1419 50%, #1a1f3a 75%, #0a0e1a 100%) !important;
+        background-color: #0a0e1a !important;
+      }
+      body {
+        background-attachment: initial !important;
+      }
+      .carousel-slide img{height:200px;}
+      .carousel-overlay{padding:1rem 0.75rem 0.75rem;}
+      .carousel-title{font-size:1rem;}
+      .carousel-subtitle{font-size:0.75rem;}
+    }
+    .carousel-dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.35);} 
+    .carousel-dot.active{background:#fff;}
+    .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);width:40px;height:40px;border-radius:999px;display:grid;place-items:center;}
+    .carousel-arrow:hover{background:rgba(0,0,0,.55);} 
+    .arrow-left{left:10px} .arrow-right{right:10px}
+
+    /* Section containers */
+    .section{scroll-margin-top:90px}
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .max-w-6xl{max-width:90%;}
+    }
+    
+    @media (max-width: 768px) {
+      /* Navigation */
+      .hidden.md\\:flex{display:none;}
+      nav .flex.items-center.gap-2{flex-direction:column;gap:0.5rem;}
+      
+      /* Hero Section */
+      .grid.md\\:grid-cols-2{grid-template-columns:1fr;gap:2rem;}
+      .text-4xl.md\\:text-6xl{font-size:2.5rem;}
+      .pt-14.md\\:pt-20{padding-top:3rem;}
+      
+      /* Skills Grid */
+      .grid.md\\:grid-cols-2.lg\\:grid-cols-4{grid-template-columns:repeat(2,1fr);gap:1rem;}
+      .grid.md\\:grid-cols-2{grid-template-columns:1fr;gap:1rem;}
+      
+      /* Cards */
+      .p-6.md\\:p-8{padding:1.5rem;}
+      .glass.card{padding:1rem;}
+      
+      /* Typography */
+      .text-2xl.md\\:text-3xl{font-size:1.75rem;}
+      .text-lg{font-size:1rem;}
+      
+      /* Spacing */
+      .mt-20{margin-top:3rem;}
+      .mt-8{margin-top:2rem;}
+      .gap-6{gap:1.5rem;}
+    }
+    
+    @media (max-width: 480px) {
+      /* Navigation */
+      nav{padding:0.75rem 1rem;}
+      nav .flex.items-center.gap-2{flex-direction:row;justify-content:space-between;width:100%;}
+      
+      /* Hero Section */
+      .text-4xl.md\:text-6xl{font-size:2rem;}
+      .pt-14.md\:pt-20{padding-top:2rem;}
+      .px-4.md\:px-6{padding-left:1rem;padding-right:1rem;}
+      
+      /* Skills Grid */
+      .grid.md\:grid-cols-2.lg\:grid-cols-4{grid-template-columns:1fr;gap:1rem;}
+      
+      /* Cards */
+      .p-6.md\:p-8{padding:1rem;}
+      .glass.card{padding:0.75rem;}
+      
+      /* Typography */
+      .text-2xl.md\:text-3xl{font-size:1.5rem;}
+      .text-lg{font-size:0.9rem;}
+      
+      /* Buttons */
+      .px-5.py-3{padding:0.75rem 1rem;}
+      .text-sm{font-size:0.8rem;}
+      
+      /* Spacing */
+      .mt-20{margin-top:2rem;}
+      .mt-8{margin-top:1.5rem;}
+      .gap-6{gap:1rem;}
+      .gap-3{gap:0.75rem;}
+      
+      /* Tags (mobile fix for project grid) */
+      .tag {
+        font-size:0.75rem !important;
+        padding:0.35rem 0.6rem !important;
+        background:rgba(124,156,255,.22) !important;
+        border:1px solid rgba(124,156,255,.32) !important;
+        color:#e7eefc !important;
+        margin:2px 2px !important;
+      }
+      #projectGrid .card {
+        padding:0.7rem !important;
+      }
+      #projectGrid .p-5 {
+        padding:0.7rem !important;
+      }
+    }
+
+    /* Enhanced floating glow effects */
+    .glow{
+      position:absolute;
+      filter:blur(80px);
+      opacity:.4;
+      pointer-events:none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Enhanced floating glows -->
+  <div class="glow -z-10 -top-10 -right-10 w-[500px] h-[500px] rounded-full" style="background:radial-gradient(closest-side,rgba(124,156,255,.6),transparent)"></div>
+  <div class="glow -z-10 bottom-20 left-10 w-[400px] h-[400px] rounded-full" style="background:radial-gradient(closest-side,rgba(255,107,157,.4),transparent)"></div>
+  <div class="glow -z-10 top-1/2 left-1/2 w-[300px] h-[300px] rounded-full" style="background:radial-gradient(closest-side,rgba(78,205,196,.3),transparent)"></div>
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-40">
+    <nav class="glass card max-w-6xl mx-auto mt-4 px-4 md:px-6 py-3 flex items-center justify-between">
+      <a href="#home" class="font-semibold text-lg tracking-tight">AY</a>
+      <div class="hidden md:flex gap-6 text-sm text-slate-300">
+        <a href="#about" class="hover:text-white" data-tr="Hakkımda" data-en="About">Hakkımda</a>
+        <a href="#experience" class="hover:text-white" data-tr="Deneyim" data-en="Experience">Deneyim</a>
+        <a href="#projects" class="hover:text-white" data-tr="Projeler" data-en="Projects">Projeler</a>
+        <a href="#contact" class="hover:text-white" data-tr="İletişim" data-en="Contact">İletişim</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <!-- Language Switcher -->
+        <button id="langBtn" class="text-sm px-3 py-2 rounded-full glass hover:bg-white/10">
+          <span id="langText">EN</span>
+        </button>
+        <a target="_blank" rel="noreferrer" href="https://github.com/asimyrml" class="text-sm px-3 py-2 rounded-full glass hover:bg-white/10">GitHub</a>
+        <a target="_blank" rel="noreferrer" href="mailto:asimyrml@gmail.com" class="text-sm px-3 py-2 rounded-full btn-primary text-white" id="emailBtn">E‑posta</a>
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden glass card max-w-6xl mx-auto mt-2 px-4 py-3">
+      <div class="flex flex-col gap-3 text-sm text-slate-300">
+        <a href="#about" class="hover:text-white py-2" data-tr="Hakkımda" data-en="About">Hakkımda</a>
+        <a href="#experience" class="hover:text-white py-2" data-tr="Deneyim" data-en="Experience">Deneyim</a>
+        <a href="#projects" class="hover:text-white py-2" data-tr="Projeler" data-en="Projects">Projeler</a>
+        <a href="#contact" class="hover:text-white py-2" data-tr="İletişim" data-en="Contact">İletişim</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="section max-w-6xl mx-auto px-4 md:px-6 pt-14 md:pt-20">
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+      <div>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Asım Yirmili</h1>
+        <p class="mt-4 text-lg text-slate-200/90 max-w-xl" data-tr="Python/Django & Full‑Stack Developer. ERP/WMS, API entegrasyonları, veri modelleme ve MLOps. Üretimde çalışan ürünler, temiz kod ve performans odaklı mimariler." data-en="Python/Django & Full‑Stack Developer. ERP/WMS, API integrations, data modeling and MLOps. Production-ready products, clean code and performance-focused architectures.">Python/Django & Full‑Stack Developer. ERP/WMS, API entegrasyonları, veri modelleme ve MLOps. Üretimde çalışan ürünler, temiz kod ve performans odaklı mimariler.</p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="tag px-3 py-1 rounded-full text-sm">Python</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">Django</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">DRF</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">PostgreSQL</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">Docker</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">React</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">TensorFlow</span>
+          <span class="tag px-3 py-1 rounded-full text-sm">MLOps</span>
+        </div>
+        <div class="mt-8 flex gap-3">
+          <a href="#projects" class="px-5 py-3 rounded-xl btn-primary text-white font-medium" data-tr="Projeler" data-en="Projects">Projeler</a>
+          <a href="#" class="px-5 py-3 rounded-xl glass" id="cvMailBtn" data-tr="CV için mail gönderin" data-en="Request CV by email">CV için mail gönderin</a>
+  
+        </div>
+      </div>
+      <div class="glass card p-2">
+        <!-- Carousel -->
+        <div class="carousel" id="heroCarousel">
+          <div class="carousel-track" id="heroTrack">
+            <!-- Replace images under assets/ with your own -->
+            <div class="carousel-slide"><img src="assets/hero-1.png" alt="Dashboard / WMS"/></div>
+            <div class="carousel-slide"><img src="assets/hero-2.png" alt="API Integrations"/></div>
+            <div class="carousel-slide"><img src="assets/cover.jpg" alt="Portfolio Cover"/></div>
+          </div>
+          <button class="carousel-arrow arrow-left" aria-label="Önceki" data-dir="-1">&#10094;</button>
+          <button class="carousel-arrow arrow-right" aria-label="Sonraki" data-dir="1">&#10095;</button>
+          <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-2" id="heroDots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section max-w-6xl mx-auto px-4 md:px-6 mt-20">
+    <div class="glass card p-6 md:p-8">
+      <h2 class="text-2xl md:text-3xl font-bold" data-tr="Hakkımda" data-en="About">Hakkımda</h2>
+      <div class="mt-4 text-slate-200/90 leading-relaxed space-y-4">
+        <p data-tr="5+ yıllık profesyonel deneyime sahip bir Python/Django geliştiricisiyim. Kariyerim boyunca ERP, WMS, CRM ve API entegrasyonları gibi uçtan uca sistemler geliştirdim; stok ve sipariş yönetimi, iade, envanter ve müşteri hizmetleri modüllerinde hem backend hem frontend tarafında aktif rol aldım." data-en="I am a Python/Django developer with 5+ years of professional experience. Throughout my career, I have developed end-to-end systems such as ERP, WMS, CRM and API integrations; I have played an active role in both backend and frontend in modules such as stock and order management, returns, inventory and customer services.">5+ yıllık profesyonel deneyime sahip bir Python/Django geliştiricisiyim. Kariyerim boyunca ERP, WMS, CRM ve API entegrasyonları gibi uçtan uca sistemler geliştirdim; stok ve sipariş yönetimi, iade, envanter ve müşteri hizmetleri modüllerinde hem backend hem frontend tarafında aktif rol aldım.</p>
+        
+        <p data-tr="Python'da ileri seviyede uzmanlığa sahibim: Django REST Framework, veri modelleme, test otomasyonu, performans optimizasyonu ve container tabanlı deployment süreçlerinde güçlü bir pratik birikimim var. Makine öğrenmesi alanında Pandas, Scikit-learn, TensorFlow, PyTorch gibi kütüphaneleri kullanarak hem tahminleme hem de veri işleme projeleri gerçekleştirdim." data-en="I have advanced expertise in Python: I have strong practical experience in Django REST Framework, data modeling, test automation, performance optimization and container-based deployment processes. In the field of machine learning, I have carried out both prediction and data processing projects using libraries such as Pandas, Scikit-learn, TensorFlow, PyTorch.">Python'da ileri seviyede uzmanlığa sahibim: Django REST Framework, veri modelleme, test otomasyonu, performans optimizasyonu ve container tabanlı deployment süreçlerinde güçlü bir pratik birikimim var. Makine öğrenmesi alanında Pandas, Scikit-learn, TensorFlow, PyTorch gibi kütüphaneleri kullanarak hem tahminleme hem de veri işleme projeleri gerçekleştirdim.</p>
+        
+        <p data-tr="Aynı zamanda 42 İstanbul öğrencisi olarak düşük seviyeli programlama ve algoritmik problem çözme konularında yoğun bir eğitim aldım. Burada POSIX standardına uygun MiniShell, bellek yönetimi, iş parçacıkları ve sistem çağrılarını içeren projeler geliştirdim. Bu süreç bana bellek optimizasyonu, performans odaklı C programlama ve yazılım mimarisi becerilerini kazandırdı." data-en="I also received intensive training in low-level programming and algorithmic problem solving as a 42 Istanbul student. Here I developed projects including POSIX-compliant MiniShell, memory management, threads and system calls. This process gave me memory optimization, performance-oriented C programming and software architecture skills.">Aynı zamanda 42 İstanbul öğrencisi olarak düşük seviyeli programlama ve algoritmik problem çözme konularında yoğun bir eğitim aldım. Burada POSIX standardına uygun MiniShell, bellek yönetimi, iş parçacıkları ve sistem çağrılarını içeren projeler geliştirdim. Bu süreç bana bellek optimizasyonu, performans odaklı C programlama ve yazılım mimarisi becerilerini kazandırdı.</p>
+        
+        <p data-tr="Öğrenmeye açık, çözüm odaklı ve sürdürülebilir yazılım geliştirme anlayışını benimseyen bir geliştiriciyim. Takım çalışmasında sorumluluk alan, yeni teknolojilere hızlı uyum sağlayan ve teknik mentorluk yapabilen bir yapım var. Amacım, hem ileri seviye Python uzmanlığımı hem de 42'de edindiğim derin algoritmik becerilerimi kullanarak yenilikçi ve yüksek kaliteli yazılım çözümleri üretmek." data-en="I am a developer who adopts an open-minded, solution-oriented and sustainable software development approach. I have a structure that takes responsibility in teamwork, adapts quickly to new technologies and can provide technical mentorship. My goal is to produce innovative and high-quality software solutions using both my advanced Python expertise and the deep algorithmic skills I gained at 42.">Öğrenmeye açık, çözüm odaklı ve sürdürülebilir yazılım geliştirme anlayışını benimseyen bir geliştiriciyim. Takım çalışmasında sorumluluk alan, yeni teknolojilere hızlı uyum sağlayan ve teknik mentorluk yapabilen bir yapım var. Amacım, hem ileri seviye Python uzmanlığımı hem de 42'de edindiğim derin algoritmik becerilerimi kullanarak yenilikçi ve yüksek kaliteli yazılım çözümleri üretmek.</p>
+      </div>
+      <!-- Skills Grid -->
+      <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Programlama Dilleri -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-blue-400"></div>
+            <h3 class="font-semibold text-slate-200" data-tr="Programlama" data-en="Programming">Programlama</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Python (Senior)</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">C (Mid)</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">C++ (Junior)</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">React (Mid)</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">JavaScript</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">HTML/CSS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Framework & Kütüphaneler -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-green-400"></div>
+            <h3 class="font-semibold text-slate-200" data-tr="Framework & ML" data-en="Framework & ML">Framework & ML</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Django</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Flask</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Bootstrap</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">TensorFlow</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">PyTorch</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Keras</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">NumPy</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Pandas</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Scikit-learn</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Veritabanı & DevOps -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-purple-400"></div>
+            <h3 class="font-semibold text-slate-200" data-tr="Veritabanı & DevOps" data-en="Database & DevOps">Veritabanı & DevOps</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">PostgreSQL</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">MongoDB</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">MySQL</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Docker</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Kubernetes</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">GitLab CI/CD</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">MLOps</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">OpenCV</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">PIL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metodolojiler & Araçlar -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-orange-400"></div>
+            <h3 class="font-semibold text-slate-200" data-tr="Metodolojiler" data-en="Methodologies">Metodolojiler</h3>
+          </div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Agile/Scrum</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Jira</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Mentorship</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">API Design</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Unix/POSIX</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Feature Engineering</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">VS Code</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">PyCharm</span>
+              <span class="tag px-2.5 py-1 rounded-lg text-xs">Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eğitim & Sertifikalar -->
+      <div class="mt-8 grid md:grid-cols-2 gap-6">
+        <!-- Eğitim -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-indigo-400"></div>
+        <h3 class="font-semibold text-slate-200" data-tr="Eğitim" data-en="Education">Eğitim</h3>
+          </div>
+          <h4 class="font-medium text-slate-200" data-tr="İstanbul Üniversitesi" data-en="Istanbul University">İstanbul Üniversitesi</h4>
+          <p class="text-slate-400"
+            data-tr="Yönetim Bilişim Sistemleri (2019 - 2022)"
+            data-en="Management Information Systems (2019 - 2022)">
+            Yönetim Bilişim Sistemleri (2019 - 2022)
+          </p>
+
+          <h4 class="font-medium text-slate-200" data-tr="42 İstanbul" data-en="42 Istanbul">42 İstanbul</h4>
+          <p class="text-slate-400"
+            data-tr="Yazılım Mühendisliği (2023 - Devam)"
+            data-en="Software Engineering (2023 – Present)">
+            Yazılım Mühendisliği (2023 - Devam)
+          </p>
+
+          <h4 class="font-medium text-slate-200" data-tr="Ahmet Yesevi Üniversitesi" data-en="Ahmet Yesevi University">Ahmet Yesevi Üniversitesi</h4>
+          <p class="text-slate-400"
+            data-tr="Kontrol ve Otomasyon (2024 - Devam)"
+            data-en="Control & Automation (2024 – Present)">
+            Kontrol ve Otomasyon (2024 - Devam)
+          </p>
+        </div>
+
+        <!-- Sertifikalar -->
+        <div class="glass rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-2 h-2 rounded-full bg-teal-400"></div>
+        <h3 class="font-semibold text-slate-200" data-tr="Sertifikalar" data-en="Certifications">Sertifikalar</h3>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div>
+              <h4 class="font-medium text-slate-200" data-tr="İleri Seviye Python" data-en="Advanced Python">Advanced Python</h4>
+              <p class="text-slate-400" data-tr="Udemy (2020)" data-en="Udemy (2020)">Udemy (2020)</p>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-200" data-tr="React Geliştirme" data-en="React Development">React Development</h4>
+              <p class="text-slate-400" data-tr="Udemy (2022)" data-en="Udemy (2022)">Udemy (2022)</p>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-200" data-tr="Veri Bilimi & ML" data-en="Data Science & ML">Data Science & ML</h4>
+              <p class="text-slate-400" data-tr="Udemy (2023)" data-en="Udemy (2023)">Udemy (2023)</p>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-200" data-tr="TechAcademy" data-en="TechAcademy">TechAcademy</h4>
+              <p class="text-slate-400" data-tr="Hepsiburada (2024)" data-en="Hepsiburada (2024)">Hepsiburada (2024)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="section max-w-6xl mx-auto px-4 md:px-6 mt-20">
+  <h2 class="text-2xl md:text-3xl font-bold mb-6" data-tr="Deneyim" data-en="Experience">Deneyim</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <article class="glass card p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-lg" data-tr="OLIVE Yenilikçi Teknoloji" data-en="OLIVE Innovative Technology">OLIVE Innovative Technology</h3>
+            <p class="text-sm text-slate-300" data-tr="Full‑Stack Developer • Ara 2019 – Tem 2025" data-en="Full‑Stack Developer • Dec 2019 – Jul 2025">Full‑Stack Developer • Ara 2019 – Tem 2025</p>
+          </div>
+          <span class="text-xs tag px-2 py-1 rounded-full" data-tr="ERP / WMS" data-en="ERP / WMS">ERP / WMS</span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-200/90 text-sm leading-relaxed list-disc list-inside">
+          <li data-tr="Satın alma, iade, stok, sipariş ve CRM modüllerinde geliştirme ve bakım." data-en="Development and maintenance in purchasing, returns, stock, order and CRM modules.">Satın alma, iade, stok, sipariş ve CRM modüllerinde geliştirme ve bakım.</li>
+          <li data-tr="DRF tabanlı servisler, 3P API entegrasyonları ve performans iyileştirmeleri." data-en="DRF-based services, 3P API integrations and performance improvements.">DRF tabanlı servisler, 3P API entegrasyonları ve performans iyileştirmeleri.</li>
+          <li data-tr="Docker’lı dağıtımlar; Jira ile Agile/Scrum süreç desteği." data-en="Docker deployments; Agile/Scrum process support with Jira.">Docker’lı dağıtımlar; Jira ile Agile/Scrum süreç desteği.</li>
+        </ul>
+      </article>
+      <article class="glass card p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-lg" data-tr="Kodland" data-en="Kodland">Kodland</h3>
+            <p class="text-sm text-slate-300" data-tr="Python Eğitmeni • May 2025 – Ağu 2025" data-en="Python Instructor • May 2025 – Aug 2025">Python Eğitmeni • May 2025 – Ağu 2025</p>
+          </div>
+          <span class="text-xs tag px-2 py-1 rounded-full" data-tr="EdTech" data-en="EdTech">EdTech</span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-200/90 text-sm leading-relaxed list-disc list-inside">
+          <li data-tr="9‑16 yaş grubuna algoritma, OOP, oyun ve mini AI projeleri." data-en="Algorithm, OOP, game and mini AI projects for 9-16 age group.">9‑16 yaş grubuna algoritma, OOP, oyun ve mini AI projeleri.</li>
+          <li data-tr="Müfredat uyarlama ve proje tabanlı öğrenme." data-en="Curriculum adaptation and project-based learning.">Müfredat uyarlama ve proje tabanlı öğrenme.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- Projects (Auto‑Carousel + Grid) -->
+  <section id="projects" class="section max-w-6xl mx-auto px-4 md:px-6 mt-20">
+    <div class="flex items-center justify-between mb-6">
+  <h2 class="text-2xl md:text-3xl font-bold" data-tr="Projeler" data-en="Projects">Projeler</h2>
+  <a href="#" class="text-sm text-slate-300 hover:text-white" data-tr="Tümünü gör" data-en="View All">Tümünü gör</a>
+    </div>
+
+    <!-- Auto‑sliding panel (single image visible) -->
+    <div class="glass card p-3 mb-8">
+      <div class="carousel" id="projCarousel">
+        <div class="carousel-track" id="projTrack"></div>
+        <button class="carousel-arrow arrow-left" aria-label="Önceki" data-dir="-1">&#10094;</button>
+        <button class="carousel-arrow arrow-right" aria-label="Sonraki" data-dir="1">&#10095;</button>
+        <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-2" id="projDots"></div>
+      </div>
+    </div>
+
+    <!-- Project cards (rendered from data) -->
+    <div id="projectGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section max-w-6xl mx-auto px-4 md:px-6 mt-24 mb-16">
+    <div class="glass card p-6 md:p-8">
+      <h2 class="text-2xl md:text-3xl font-bold" data-tr="İletişim" data-en="Contact">İletişim</h2>
+      <p class="mt-3 text-slate-300" data-tr="Proje, iş birliği ya da danışmanlık için bana ulaşabilirsiniz." data-en="You can reach me for projects, collaboration or consultancy.">Proje, iş birliği ya da danışmanlık için bana ulaşabilirsiniz.</p>
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-sm">
+        <a class="px-4 py-2 rounded-xl btn-primary text-white" href="mailto:asimyirmili@gmail.com" data-tr="E‑posta Gönder" data-en="Send Email">E‑posta Gönder</a>
+        <a class="px-4 py-2 rounded-xl glass" target="_blank" rel="noreferrer" href="https://github.com/asimyrml">GitHub</a>
+        <a class="px-4 py-2 rounded-xl glass" target="_blank" rel="noreferrer" href="https://linkedin.com/in/asım-yirmili-b63297218">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pb-8">
+    © <span id="y"></span> Asım Yirmili — <span data-tr="Üretimde kalite ve esneklik." data-en="Quality and flexibility in production.">Üretimde kalite ve esneklik.</span>
+  </footer>
+
+  <script>
+    // Language system
+    let currentLang = 'tr'; // Default Turkish
+    
+    // Language data
+    const translations = {
+      tr: {
+        pageTitle: 'Asım Yirmili • Portfolio',
+        pageDescription: 'Asım Yirmili – Python/Django & Full‑Stack Developer Portfolio',
+        ogTitle: 'Asım Yirmili • Portfolio',
+        ogDescription: 'Python/Django, ERP/WMS, API Entegrasyonları, MLOps',
+        langText: 'EN',
+        emailBtn: 'E‑posta',
+        cvDownload: 'CV\'yi İndir',
+        cvHref: 'ASIM_YIRMILI_CV_TR.pdf'
+      },
+      en: {
+        pageTitle: 'Asım Yirmili • Portfolio',
+        pageDescription: 'Asım Yirmili – Python/Django & Full‑Stack Developer Portfolio',
+        ogTitle: 'Asım Yirmili • Portfolio',
+        ogDescription: 'Python/Django, ERP/WMS, API Integrations, MLOps',
+        langText: 'TR',
+        emailBtn: 'Email',
+        cvDownload: 'Download CV',
+        cvHref: 'ASIM_YIRMILI_CV_EN.pdf'
+      }
+    };
+
+    // CV mail alert çoklu dil
+    function showCVMailAlert(e) {
+      e.preventDefault();
+      var lang = (typeof currentLang !== 'undefined') ? currentLang : 'tr';
+      var msg = lang === 'en'
+        ? 'To get the CV, please send an email to asimyirmili@gmail.com. I will send you the latest CV file.'
+        : 'CV almak için lütfen asimyirmili@gmail.com adresine e-posta gönderin. Size en güncel CV dosyasını ileteceğim.';
+      alert(msg);
+    }
+    // CV butonuna event ekle
+    document.addEventListener('DOMContentLoaded', function() {
+      var cvBtn = document.getElementById('cvMailBtn');
+      if (cvBtn) {
+        cvBtn.addEventListener('click', showCVMailAlert);
+      }
+    });
+    
+    // Change language function
+    function changeLanguage(lang) {
+      currentLang = lang;
+      
+      // Update page meta
+      document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+      document.getElementById('pageDescription').content = translations[lang].pageDescription;
+      document.getElementById('ogTitle').content = translations[lang].ogTitle;
+      document.getElementById('ogDescription').content = translations[lang].ogDescription;
+      
+  // Update language button
+  document.getElementById('langText').textContent = translations[lang].langText;
+  document.getElementById('emailBtn').textContent = translations[lang].emailBtn;
+      
+      // Update all elements with data attributes
+      document.querySelectorAll('[data-tr][data-en]').forEach(element => {
+        element.textContent = element.getAttribute(`data-${lang}`);
+      });
+      // CV mail butonunu da güncelle
+      var cvBtn = document.getElementById('cvMailBtn');
+      if (cvBtn) {
+        cvBtn.textContent = cvBtn.getAttribute(`data-${lang}`);
+      }
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+      
+      // Save language preference
+      localStorage.setItem('portfolioLang', lang);
+    }
+    
+    // Initialize language
+    function initLanguage() {
+      const savedLang = localStorage.getItem('portfolioLang');
+      if (savedLang && (savedLang === 'tr' || savedLang === 'en')) {
+        changeLanguage(savedLang);
+      } else {
+        changeLanguage('tr'); // Default Turkish
+      }
+    }
+    
+    // Language button event
+    document.getElementById('langBtn').addEventListener('click', () => {
+      const newLang = currentLang === 'tr' ? 'en' : 'tr';
+      changeLanguage(newLang);
+    });
+    
+    // Initialize
+    initLanguage();
+    
+    // Footer year
+    document.getElementById('y').textContent = new Date().getFullYear();
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Close mobile menu when clicking on links
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // ---- Simple carousel utility (single-visible, auto-play, hover pause, swipe) ----
+    function makeCarousel(rootId, images, autoMs=4500){
+      const root = document.getElementById(rootId);
+      const track = root.querySelector('.carousel-track');
+      const dotsWrap = root.querySelector('[id$="Dots"]');
+      const leftBtn = root.querySelector('.arrow-left');
+      const rightBtn = root.querySelector('.arrow-right');
+      let index = 0, timer = null, isDragging=false, startX=0, dx=0;
+
+      // Build slides
+      track.innerHTML = images.map(src => `\n        <div class="carousel-slide">
+          <img src="${src.src}" alt="${src.alt||''}">
+          <div class="carousel-overlay">
+            <h3 class="carousel-title">${src.title||''}</h3>
+            <p class="carousel-subtitle">${src.subtitle||''}</p>
+          </div>
+        </div>`).join('');
+
+      // Build dots
+      dotsWrap.innerHTML = images.map((_,i)=>`<button class="carousel-dot" data-i="${i}" aria-label="${i+1}. görsel"></button>`).join('');
+      const dots = [...dotsWrap.children];
+
+      function go(i){
+        index = (i+images.length)%images.length;
+        track.style.transform = `translateX(-${index*100}%)`;
+        dots.forEach((d,di)=>d.classList.toggle('active', di===index));
+      }
+      function next(dir=1){ go(index+dir); }
+      function play(){ stop(); timer = setInterval(()=>next(1), autoMs); }
+      function stop(){ if(timer) clearInterval(timer); timer=null; }
+
+      // Bindings
+      leftBtn.addEventListener('click',()=>{ next(-1); });
+      rightBtn.addEventListener('click',()=>{ next(1); });
+      dots.forEach(d=> d.addEventListener('click', (e)=>{ go(parseInt(e.currentTarget.dataset.i,10)); }));
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', play);
+
+      // Touch/drag
+      track.addEventListener('pointerdown', (e)=>{ isDragging=true; startX=e.clientX; dx=0; track.style.transition='none'; stop(); });
+      window.addEventListener('pointermove', (e)=>{
+        if(!isDragging) return; dx = e.clientX-startX; track.style.transform = `translateX(calc(-${index*100}% + ${dx}px))`;
+      });
+      window.addEventListener('pointerup', ()=>{
+        if(!isDragging) return; track.style.transition='';
+        if(Math.abs(dx)>60){ next(dx<0?1:-1); } else { go(index); }
+        isDragging=false; play();
+      });
+
+      // Init
+      go(0); play();
+      return {go,next,play,stop};
+    }
+
+    // Hero carousel (static images)
+    makeCarousel('heroCarousel', [
+      {src:'assets/hero-1.png', alt:'All Return Records Dashboard', title:'All Return Records Dashboard', subtitle:'İade/ERP ekranı'},
+      {src:'assets/hero-2.png', alt:'TaskLab – Modern Task Management', title:'TaskLab – Modern Task Management', subtitle:'Görev yönetim sistemi'},
+      {src:'assets/hero-3.png', alt:'Real Estate Price Prediction', title:'Real Estate Price Prediction', subtitle:'Kira tahmin projesi (ML & Ethics)'},
+      {src:'assets/hero-4.png', alt:'Repair Simulation Platform', title:'Repair Simulation Platform', subtitle:'Cihaz onarım simülasyonu'},
+      {src:'assets/hero-5.png', alt:'Financial & Purchase Analysis Dashboard', title:'Financial & Purchase Analysis Dashboard', subtitle:'Satın alma / finans ekranı'},
+    ], 4200);
+
+    // Projects data —> EDIT HERE
+    const PROJECTS = [
+      {
+        title:'Tarz Kutu Stok Yönetimi',
+        enTitle:'Tarz Kutu Stock Management',
+        period:'2023 – Devam',
+        enPeriod:'2023 – Present',
+        tags:['Django','DRF','PostgreSQL','Docker'],
+        img:'assets/proj-tarzkutu.png',
+        desc:'Çok depolu, gerçek zamanlı envanter & sipariş yönetimi; ERP/E‑Fatura entegrasyonları.',
+        enDesc:'Multi-warehouse, real-time inventory & order management; ERP/e-invoice integrations.',
+        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+      },
+      {
+        title:'Zebra Yazıcı Mikro‑Servisi',
+        enTitle:'Zebra Printer Microservice',
+        period:'2025',
+        enPeriod:'2025',
+        tags:['Python','Django Signals','ZPL','Docker'],
+        img:'assets/hero-4.png',
+        desc:'Ağdaki Zebra yazıcılara otomatik ZPL yazdırma, sıra yönetimi ve durum izleme.',
+        enDesc:'Automatic ZPL printing to network Zebra printers, queue management and status monitoring.',
+        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+      },
+      {
+        title:'İstanbul Kira Tahmini',
+        enTitle:'Istanbul Rent Prediction',
+        period:'2025',
+        enPeriod:'2025',
+        tags:['Pandas','Scikit‑learn','XGBoost','API'],
+        img:'assets/hero-3.png',
+        desc:'Coğrafi özellik mühendisliği ile tahmin; API üzerinden anlık analiz.',
+        enDesc:'Prediction with geographic feature engineering; instant analysis via API.',
+        links:[{label:'Repo',href:'https://github.com/asimyrml'},{label:'Demo',href:'#'}]
+      },
+      // --- Yeni projeleri bu formatta ekleyin ---
+    ];
+
+    // Projects carousel (single visible)
+    makeCarousel('projCarousel', PROJECTS.map(p=>({src:p.img, alt:p.title})), 3800);
+
+    // Grid render
+    const grid = document.getElementById('projectGrid');
+    grid.innerHTML = PROJECTS.map(p=>`\n      <article class="glass card overflow-hidden">
+        <img src="${p.img}" alt="${p.title}" class="w-full h-40 object-contain object-center rounded-t-xl bg-slate-800/20">
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="font-semibold text-lg" data-tr="${p.title}" data-en="${p.enTitle}">${p.title}</h3>
+              <p class="text-xs text-slate-400" data-tr="${p.period}" data-en="${p.enPeriod}">${p.period}</p>
+            </div>
+            <div class="flex gap-1 flex-wrap">${p.tags.map(t=>`<span class='tag px-2 py-0.5 rounded-full text-xs'>${t}</span>`).join('')}</div>
+          </div>
+          <p class="mt-3 text-sm text-slate-200/90 leading-relaxed" data-tr="${p.desc}" data-en="${p.enDesc}">${p.desc}</p>
+          <div class="mt-4 flex gap-2 flex-wrap">
+            ${p.links.map(l=>`<a class='px-3 py-2 rounded-lg glass text-sm' target='_blank' rel='noreferrer' href='${l.href}'>${l.label}</a>`).join('')}
+          </div>
+        </div>
+      </article>`).join('');
+  </script>
+</body>
+</html>
